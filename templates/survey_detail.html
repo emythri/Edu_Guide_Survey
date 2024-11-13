@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container" style="margin-top: 20px;"> <!-- Add margin-top here -->
+        <h2>{{ survey.title }}</h2> 
+        <style>
+            
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: #fff;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            margin: 0;
+        }
+        li {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+        .button-link {
+            display: inline-block;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            width: fit-content;
+        }
+        .button-link:hover {
+            background-color: #0056b3;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .back-link {
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit</button>
+        </form>
+        
+        <div class="back-link">
+            <a href="{% url 'survey_list' %}" class="button-link">Back to Surveys</a>
+        </div>
+        
+        {% if survey.creator == request.user %}
+            <h2>Questions for "{{ survey.title }}"</h2>
+            <ul>
+                {% for question in survey.questions.all %}
+                    <li>
+                        {{ question.text }}
+                        <div class="actions">
+                            <a href="{% url 'edit_question' question.id %}">Edit</a>
+                            <a href="{% url 'delete_question' question.id %}">Delete</a>
+                        </div>
+                    </li>
+                {% empty %}
+                    <li>No questions available for this survey.</li>
+                {% endfor %}
+            </ul>
+            
+            <a href="{% url 'create_question' survey.id %}" class="button-link">Add New Question</a>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% comment %} {% extends 'base.html' %}
+{% block content %}
+    <div class="container" style="margin-top: 20px;">
+        <h2>{{ survey.title }}</h2>
+        <style>
+            .container {
+                max-width: 800px;
+                width: 100%;
+                background-color: #fff;
+                padding: 20px;
+                margin-top: 20px;
+                box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+            h1, h2 {
+                text-align: center;
+                margin: 0;
+            }
+            li {
+                margin-bottom: 15px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .actions {
+                display: flex;
+                gap: 10px;
+            }
+            .button-link {
+                display: inline-block;
+                padding: 10px;
+                background-color: #007bff;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+                text-align: center;
+                width: fit-content;
+            }
+            .button-link:hover {
+                background-color: #0056b3;
+            }
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .back-link {
+                margin-top: 10px;
+                text-align: center;
+            }
+        </style>
+        <form method="post">
+            {% csrf_token %}
+            {% for question in form %}
+                <div>
+                    <p>{{ question.label }}</p>
+                    {{ question }}  <!-- This renders the radio buttons -->
+                </div>
+            {% endfor %}
+            <button type="submit">Submit</button>
+        </form>
+        
+        <div class="back-link">
+            <a href="{% url 'survey_list' %}" class="button-link">Back to Surveys</a>
+        </div>
+        
+        {% if survey.creator == request.user %}
+            <h2>Questions for "{{ survey.title }}"</h2>
+            <ul>
+                {% for question in survey.questions.all %}
+                    <li>
+                        {{ question.text }}
+                        <div class="actions">
+                            <a href="{% url 'edit_question' question.id %}">Edit</a>
+                            <a href="{% url 'delete_question' question.id %}">Delete</a>
+                        </div>
+                    </li>
+                {% empty %}
+                    <li>No questions available for this survey.</li>
+                {% endfor %}
+            </ul>
+            
+            <a href="{% url 'create_question' survey.id %}" class="button-link">Add New Question</a>
+        {% endif %}
+    </div>
+{% endblock %}
+ {% endcomment %}

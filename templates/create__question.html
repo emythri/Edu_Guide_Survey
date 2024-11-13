@@ -1,0 +1,30 @@
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Question</title>
+</head>
+<body>
+    <h1>Create Question for "{{ survey.title }}"</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create Question</button>
+    </form>
+    <a href="{% url 'survey_detail' survey.id %}">Back to Survey</a>
+</body>
+</html> {% endcomment %}
+
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Add a Question to "{{ survey.title }}"</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Question</button>
+  </form>
+  <a href="{% url 'survey_detail' survey.id %}">Cancel</a>
+{% endblock %}

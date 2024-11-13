@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="login-container">
+    <h1>Register</h1> 
+    <form method="POST" action=""> 
+        {% csrf_token %} 
+        {{ form.username.label }} 
+        {{ form.username }} 
+        <br> 
+        <br> 
+        {{ form.email.label }} 
+        {{ form.email }} 
+        <br> 
+        <br> 
+        {{ form.password1.label }} 
+        {{ form.password1 }} 
+        <br> 
+        <br> 
+        {{ form.password2.label }} 
+        {{ form.password2 }} 
+        <br> 
+        <br> 
+        <input type="submit" name="Create User"> <br><br>
+    </form> 
+    {% for message in messages %} 
+        <p id="messages">{{ message }} </p> 
+    {% endfor %}
+    <a href="{% url 'login' %}">
+        <button type="button" class="btn btn-success">Back to Login</button><br><br>
+    </a>
+    <a href="{% url 'home' %}">
+        <button type="button" class="btn btn-success">Back to Home</button><br><br>
+    </a>
+</div>
+{% endblock %}

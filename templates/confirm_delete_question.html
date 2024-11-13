@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Delete Question</title>
+</head>
+<body>
+    <h1>Are you sure you want to delete the question: "{{ question.text }}"?</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirm</button>
+    </form>
+    <a href="{% url 'survey_detail' object.survey.id %}">Cancel</a>
+</body>
+</html>
+{% endblock %} 
